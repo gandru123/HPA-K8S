@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deploy
+spec:
+  replicas: 4
+  minReadySeconds: 15
+  selector:
+    matchLabels:
+      app: myblue
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: myblue
+    spec:
+      containers:
+        - name: my-container
+          image: gandru/villagehtml:village-app
+          ports:
+            - containerPort: 80
